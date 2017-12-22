@@ -125,7 +125,29 @@ class FlexiformEntityFormDisplay extends EntityFormDisplay implements FlexiformE
   }
 
   /**
-   * {@inheritform}
+   * {@inheritdoc}
+   */
+  public function getRenderer($component_name) {
+    if (isset($this->plugins[$component_name])) {
+      return $this->plugins[$component_name];
+    }
+
+    $configuration = $this->getComponent($component_name);
+    if (!$configuration) {
+      return NULL;
+    }
+
+    if (empty($configuration['component_type'])) {
+      return parent::getRenderer($component_name);
+    }
+
+    if ($configuration['component_type'] == 'block') {
+
+    }
+  }
+
+  /**
+   * {@inheritdoc}
    */
   public function processForm($element, FormStateInterface $form_state, $form) {
     $element = parent::processForm($element, $form_state, $form);
